@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -7,7 +8,7 @@
 
   <title>Naive Bayes</title>
 
-  
+
   <!-- Font Awesome Icons -->
   <link rel="stylesheet" href="<?= base_url() ?>assets/plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
@@ -25,6 +26,7 @@
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
+
 <body class="hold-transition sidebar-mini layout-fixed layout-navbar-fixed layout-footer-fixed">
   <div class="wrapper">
     <!-- Navbar -->
@@ -43,7 +45,7 @@
       </ul>
 
       <!-- SEARCH FORM -->
-<!--     <form class="form-inline ml-3">
+      <!--     <form class="form-inline ml-3">
       <div class="input-group input-group-sm">
         <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
         <div class="input-group-append">
@@ -54,18 +56,18 @@
       </div>
     </form> -->
 
-    <!-- Right navbar links -->
-    <!-- <ul class="navbar-nav ml-auto"> -->
+      <!-- Right navbar links -->
+      <!-- <ul class="navbar-nav ml-auto"> -->
       <!-- Messages Dropdown Menu -->
-<!--       <li class="nav-item dropdown">
+      <!--       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span>
         </a>
         <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
           <a href="#" class="dropdown-item"> -->
-            <!-- Message Start -->
-<!--             <div class="media">
+      <!-- Message Start -->
+      <!--             <div class="media">
               <img src="<?= base_url() ?>assets/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
@@ -76,12 +78,12 @@
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
               </div>
             </div> -->
-            <!-- Message End -->
-<!--           </a>
+      <!-- Message End -->
+      <!--           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item"> -->
-            <!-- Message Start -->
-<!--             <div class="media">
+      <!-- Message Start -->
+      <!--             <div class="media">
               <img src="<?= base_url() ?>assets/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
@@ -92,12 +94,12 @@
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
               </div>
             </div> -->
-            <!-- Message End -->
-<!--           </a>
+      <!-- Message End -->
+      <!--           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item"> -->
-            <!-- Message Start -->
-<!--             <div class="media">
+      <!-- Message Start -->
+      <!--             <div class="media">
               <img src="<?= base_url() ?>assets/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
@@ -108,14 +110,14 @@
                 <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
               </div>
             </div> -->
-            <!-- Message End -->
-<!--           </a>
+      <!-- Message End -->
+      <!--           </a>
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
       </li> -->
       <!-- Notifications Dropdown Menu -->
-<!--       <li class="nav-item dropdown">
+      <!--       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
           <span class="badge badge-warning navbar-badge">15</span>

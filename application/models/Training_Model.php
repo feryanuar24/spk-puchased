@@ -72,51 +72,77 @@ class Training_Model extends CI_Model
 
 	public function Age($status)
 	{
-		$this->db->where('Age', $status);
-		$this->db->where('Purchased', 1);
-		$this->db->from('mytable');
-		$yes = $this->db->count_all_results() / $this->count_yes();
-		$this->db->where('Age', $status);
-		$this->db->where('Purchased', 0);
-		$this->db->from('mytable');
-		$no = $this->db->count_all_results() / $this->count_no();
+		$kat_umur = "";
+		if ($status > 44) {
+			$kat_umur = "tua";
+		} else if ($status >= 35 && $status <= 44) {
+			$kat_umur = "sedang";
+		} else if ($status < 35) {
+			$kat_umur = "muda";
+		}
+		$q_yes = $this->db->query("
+			SELECT count(*) as jml FROM (
+			SELECT Age,  Purchased,
+			CASE
+			WHEN Age > 44 THEN 'tua'
+			WHEN Age >= 35 AND Age <= 44 THEN 'sedang'
+			WHEN Age < 35 THEN 'muda'
+			ELSE ''
+			END AS c_Age
+			FROM mytable 
+			) as conversi_Age  WHERE c_Age ='$kat_umur' AND Purchased = 1
+			")->row();
+		$yes = $q_yes->jml / $this->count_yes();
+		$q_no = $this->db->query("
+			SELECT count(*) as jml FROM (
+			SELECT Age,  Purchased,
+			CASE
+			WHEN Age > 44 THEN 'tua'
+			WHEN Age >= 35 AND Age <= 44 THEN 'sedang'
+			WHEN Age < 35 THEN 'muda'
+			ELSE ''
+			END AS c_Age
+			FROM mytable 
+			) as conversi_Age  WHERE c_Age ='$kat_umur' AND Purchased = 0
+			")->row();
+		$no = $q_no->jml / $this->count_no();
 		return array(1 => $yes, 0 => $no);
 	}
 
 	public function AnnualSalary($status)
 	{
-		$kat = "";
-		if ($status > 125625) {
-			$kat = "tinggi";
-		} else if ($status >= 83750 && $status <= 125625) {
-			$kat = "sedang";
-		} else if ($status < 83750) {
-			$kat = "rendah";
+		$kat_gaji = "";
+		if ($status > 100000) {
+			$kat_gaji = "tinggi";
+		} else if ($status >= 50000 && $status <= 100000) {
+			$kat_gaji = "sedang";
+		} else if ($status < 50000) {
+			$kat_gaji = "rendah";
 		}
 		$q_yes = $this->db->query("
 			SELECT count(*) as jml FROM (
 			SELECT AnnualSalary,  Purchased,
 			CASE
-			WHEN AnnualSalary > 125625 THEN 'tinggi'
-			WHEN AnnualSalary >= 83750 AND AnnualSalary <= 125625 THEN 'sedang'
-			WHEN AnnualSalary < 83750 THEN 'rendah'
+			WHEN AnnualSalary > 100000 THEN 'tinggi'
+			WHEN AnnualSalary >= 50000 AND AnnualSalary <= 100000 THEN 'sedang'
+			WHEN AnnualSalary < 50000 THEN 'rendah'
 			ELSE ''
 			END AS c_AnnualSalary
 			FROM mytable 
-			) as conversi_AnnualSalary  WHERE c_AnnualSalary ='$kat' AND Purchased = 1
+			) as conversi_AnnualSalary  WHERE c_AnnualSalary ='$kat_gaji' AND Purchased = 1
 			")->row();
 		$yes = $q_yes->jml / $this->count_yes();
 		$q_no = $this->db->query("
 			SELECT count(*) as jml FROM (
 			SELECT AnnualSalary,  Purchased,
 			CASE
-			WHEN AnnualSalary > 125625 THEN 'tinggi'
-			WHEN AnnualSalary >= 83750 AND AnnualSalary <= 125625 THEN 'sedang'
-			WHEN AnnualSalary < 83750 THEN 'rendah'
+			WHEN AnnualSalary > 100000 THEN 'tinggi'
+			WHEN AnnualSalary >= 50000 AND AnnualSalary <= 100000 THEN 'sedang'
+			WHEN AnnualSalary < 50000 THEN 'rendah'
 			ELSE ''
 			END AS c_AnnualSalary
 			FROM mytable 
-			) as conversi_AnnualSalary  WHERE c_AnnualSalary ='$kat' AND Purchased = 0
+			) as conversi_AnnualSalary  WHERE c_AnnualSalary ='$kat_gaji' AND Purchased = 0
 			")->row();
 		$no = $q_no->jml / $this->count_no();
 		return array(1 => $yes, 0 => $no);
