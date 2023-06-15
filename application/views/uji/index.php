@@ -17,7 +17,6 @@
     </div><!-- /.container-fluid -->
   </section>
 
-
   <!-- Main content -->
   <section class="content">
     <!-- NOTIFIKASI -->
@@ -53,34 +52,21 @@
                 <?= validation_errors(); ?>
                 <form action="<?= base_url() ?>DataUji/hitung" method="post" accept-charset="utf-8">
                   <div class="card-body">
-                    <!-- <div class="form-group">
-                      <label for="exampleInputEmail1">Id Training</label>
-                      <input type="text" class="form-control" id="exampleInputEmail1" name="id_training">
-                    </div> -->
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Nama Penduduk</label>
-                      <input type="text" class="form-control" id="exampleInputPassword1" name="nama">
-                    </div>
-                    <div class="form-group">
-                      <label>Kepala Rumah Tangga</label>
-                      <select class="form-control" name="kepala_rt">
-                        <option value="laki-laki">Laki-laki</option>
-                        <option value="perempuan">Perempuan</option>
+                      <label>Gender</label>
+                      <select class="form-control" name="Gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                       </select>
                     </div>
                     <div class="form-group">
-                      <label>Jumlah Penghasilan</label>
-                      <input type="text" class="form-control" id="exampleInputPassword1" name="jml_penghasilan">
-
+                      <label>Age</label>
+                      <input type="text" class="form-control" id="exampleInputPassword1" name="Age">
                     </div>
-                    <!-- <div class="form-group">
-                      <label>Status Kelayakan</label>
-                      <select class="form-control" name="status_kelayakan">
-                        <option value="layak">Layak</option>
-                        <option value="tidak layak">Tidak Layak</option>
-                      </select>
+                    <div class="form-group">
+                      <label>AnnualSalary</label>
+                      <input type="text" class="form-control" id="exampleInputPassword1" name="AnnualSalary">
                     </div>
-                  -->
                     <input type="submit" name="save" class="btn btn-primary" value="Save">
                   </div>
                   <!-- /.card-body -->
@@ -107,11 +93,11 @@
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Id Training</th>
-                  <th>Nama</th>
-                  <th>Kepala Rumah Tangga</th>
-                  <th>Jumlah Penghasilan</th>
-                  <th>Status Kelayakan</th>
+                  <th>User_ID</th>
+                  <th>Gender</th>
+                  <th>Age</th>
+                  <th>AnnualSalary</th>
+                  <th>Purchased</th>
                 </tr>
               </thead>
               <tbody>
@@ -120,17 +106,15 @@
                 foreach ($training as $row) { ?>
                   <tr>
                     <td><?= $no ?></td>
-                    <td><?= $row->id_training ?></td>
-                    <td><?= $row->nama ?></td>
-                    <td><?= $row->kepala_rt ?></td>
-                    <td><?= $row->jml_penghasilan ?></td>
-                    <td><?= $row->status_kelayakan ?></td>
-
-
+                    <td><?= $row->User_ID ?></td>
+                    <td><?= $row->Gender ?></td>
+                    <td><?= $row->Age ?></td>
+                    <td><?= $row->AnnualSalary ?></td>
+                    <td><?= $row->Purchased ?></td>
                     <td>
                       <div class="btn-group">
-                        <a href="<?= base_url() ?>DataUji/hapus/<?= $row->id_training ?>" class="btn btn-danger" onclick="return confirm('yakin ?')">Hapus</a>
-                        <a href="<?= base_url() ?>DataUji/ubah/<?= $row->id_training ?>" class="btn btn-warning">update</a>
+                        <a href="<?= base_url() ?>DataUji/hapus/<?= $row->User_ID ?>" class="btn btn-danger" onclick="return confirm('yakin ?')">Hapus</a>
+                        <a href="<?= base_url() ?>DataUji/ubah/<?= $row->User_ID ?>" class="btn btn-warning">update</a>
                       </div>
                     </td>
                   </tr>

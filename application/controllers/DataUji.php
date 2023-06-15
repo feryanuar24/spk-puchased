@@ -33,13 +33,9 @@ class DataUji extends CI_Controller
 
 	public function ubah($id)
 	{
-
-		$this->form_validation->set_rules("nama", "Nama", "required");
-		$this->form_validation->set_rules("kepala_rt", "Kepala Rumah Tangga", "required");
-		$this->form_validation->set_rules("jml_penghasilan", "Jumlah Penghasilan", "required");
-		$this->form_validation->set_rules("status_rumah", "Status Rumah", "required");
-
-
+		$this->form_validation->set_rules("Gender", "Gender", "required");
+		$this->form_validation->set_rules("Age", "Age", "required");
+		$this->form_validation->set_rules("AnnualSalary", "AnnualSalary", "required");
 		if ($this->form_validation->run() == FALSE) {
 			$data['ubah'] = $this->Uji_Model->detail_data($id);
 			$this->load->view('templates/header');
@@ -56,9 +52,9 @@ class DataUji extends CI_Controller
 	function hitung()
 	{
 		$output = "";
-		$this->form_validation->set_rules("nama", "Nama", "required");
-		$this->form_validation->set_rules("kepala_rt", "Kepala Rumah Tangga", "required");
-		$this->form_validation->set_rules("jml_penghasilan", "Jumlah Penghasilan", "required");
+		$this->form_validation->set_rules("Gender", "Gender", "required");
+		$this->form_validation->set_rules("Age", "Age", "required");
+		$this->form_validation->set_rules("AnnualSalary", "AnnualSalary", "required");
 		if ($this->form_validation->run() == FALSE) {
 			$data['ubah'] = $this->Uji_Model->detail_data();
 			$this->load->view('templates/header');
@@ -66,163 +62,100 @@ class DataUji extends CI_Controller
 			$this->load->view('uji/ubah', $data);
 			$this->load->view('templates/footer');
 		} else {
-			$kepala_rt = array();
-			$jml_penghasilan = array();
-			$status_rumah = array();
+			$gender = array();
+			$age = array();
+			$annualsalary = array();
+			$jumlah_yes = $this->Training_Model->count_yes();
+			$jumlah_no = $this->Training_Model->count_no();
+			$total_training = $jumlah_yes + $jumlah_no;
+			$gender = $this->Training_Model->gender($this->input->post('Gender'));
+			$age = $this->Training_Model->age($this->input->post('Age'));
+			$annualsalary = $this->Training_Model->annualsalary($this->input->post('AnnualSalary'));
 
-			$jumlah_layak = $this->Training_Model->count_layak();
-			$jumlah_tidak_layak = $this->Training_Model->count_tidaklayak();
-			$total_training = $jumlah_layak + $jumlah_tidak_layak;
-			$kepala_rt = $this->Training_Model->kepala_rt($this->input->post('kepala_rt'));
-			$jml_penghasilan = $this->Training_Model->jml_penghasilan($this->input->post('jml_penghasilan'));
-
-			//perhitungan //Step 1
-
+			//Label
+			$output .= "<span style='font-weight:bold;font-size:20px;'>Label</span>";
 			$output .= "
-			<table id='example1' class='table table-bordered table-striped'>
+			<table id='example1' border='1'>
 			<thead>
 			<tr>
 			<th>Jumlah Data</th>
-			<th>Kelas PC1(Layak)</th>
-			<th>Kelas PC0(Tidak Layak)</th>
+			<th>Kelas PC1(Yes)</th>
+			<th>Kelas PC0(No)</th>
 			</tr>
 			<tr>
 			<td>" . $total_training . "</td>
-			<td>" . $jumlah_layak . "</td>
-			<td>" . $jumlah_tidak_layak . "</td>
+			<td>" . $jumlah_yes . "</td>
+			<td>" . $jumlah_no . "</td>
 			</tr>
 			</thead>
-			</table>";
+			</table>
+			<br>";
 
-
-
-			//Step 1
-			//tampil
-			$PC1 = round($jumlah_layak / ($jumlah_tidak_layak + $jumlah_layak), 2);
-			$PC0 = round($jumlah_tidak_layak / ($jumlah_tidak_layak + $jumlah_layak), 2);
-
-			$kelas_layak = round($kepala_rt['layak'], 2) * round($jml_penghasilan['layak'], 2) * $PC1;
-
-			$kelas_tidak_layak = round($kepala_rt['tidaklayak'], 2) * round($jml_penghasilan['tidaklayak'], 2) * $PC0;
-
-			$output .= "----Probabilitas Prior----<br>";
+			//Probabilitas Prior
+			$PC1 = round($jumlah_yes / ($jumlah_no + $jumlah_yes), 2);
+			$PC0 = round($jumlah_no / ($jumlah_no + $jumlah_yes), 2);
+			$kelas_yes = round($gender[1], 2) * round($age[1], 2) * round($annualsalary[1], 2) * $PC1;
+			$kelas_no = round($gender[0], 2) * round($age[0], 2) * round($annualsalary[0], 2) * $PC0;
+			$output .= "<span style='font-weight:bold;font-size:20px;'>Probabilitas Prior</span>";
 			$output .= "
-			<table id='example1' class='table table-bordered table-striped'>
+			<table id='example1' border='1'>
 			<thead>
 			<tr>
-			<th>Kelas PC1(Layak)</th>
-			<th>Kelas PC0(Tidak Layak)</th>
+			<th>Kelas PC1(Yes)</th>
+			<th>Kelas PC0(No)</th>
 			</tr>
 			<tr>
 			<td>" . $PC1 . "</td>
 			<td>" . $PC0 . "</td>
 			</tr>
 			</thead>
-			</table>";
+			</table>
+			<br>
+			";
 
-
-
-
-			//STEP 2
-			// $output .= "----Probabilitas Posterior----<br>";
-			// $output .= "status_PKH : ";
-			// $output .= var_dump($status_PKH);
-			// $output .= "<br>";
-			// $output .= "jumlah tanggungan : ";
-			// $output .= var_dump($jumlah_tanggungan);
-			// $output .= "<br>";
-			// $output .= "kepala_rt : ";
-			// $output .= var_dump($kepala_rt);
-			// $output .= "<br>";
-			// $output .= "kondisi_rumah : ";
-			// $output .= var_dump($kondisi_rumah);
-			// $output .= "<br>";
-			// $output .= "jml_penghasilan : ";
-			// $output .= var_dump($jml_penghasilan);
-			// $output .= "<br>";
-			// $output .= "status_rumah : ";
-			// $output .= var_dump($status_rumah);
-			// $output .= "<br><br>";
-
-
-			//step 3
-			$output .= "----Probabilitas Data Uji----<br>";
+			//Probabilitas Data Uji
+			$output .= "<span style='font-weight:bold;font-size:20px;'>Probabilitas Data Uji</span>";
 			$output .= "
-			<table id='example1' class='table table-bordered table-striped'>
+			<table id='example1' border='1'>
 			<thead>
 			<tr>
 			<th> </th>
-			<th>Kepala Rumah Tangga</th>
-			<th>Jml Pengha silan</th>
+			<th>Gender</th>
+			<th>Age</th>
+			<th>AnnualSalary</th>
 			<th>Hasil Proba bilitas</th>
 			</tr>
 			<tr>
-			<td>PC1 (Layak)</th>
-			<td>" . round($kepala_rt['layak'], 2) . "</td>
-			<td>" . round($jml_penghasilan['layak'], 2) . "</td>
-			
-			<td>" . $kelas_layak . "</td>
+			<td>PC1 (Yes)</th>
+			<td>" . round($gender[1], 2) . "</td>
+			<td>" . round($age[1], 2) . "</td>
+			<td>" . round($annualsalary[1], 2) . "</td>
+			<td>" . $kelas_yes . "</td>
 			</tr>
-
 			<tr>
-			<td>PC0 (Tidak Layak)</th>
-			<td>" . round($kepala_rt['tidaklayak'], 2) . "</td>
-			<td>" . round($jml_penghasilan['tidaklayak'], 2) . "</td>
-
-			<td>" . $kelas_tidak_layak . "</td>
+			<td>PC0 (No)</th>
+			<td>" . round($gender[0], 2) . "</td>
+			<td>" . round($age[0], 2) . "</td>
+			<td>" . round($annualsalary[0], 2) . "</td>
+			<td>" . $kelas_no . "</td>
 			</tr>
 			</thead>
 			</table>";
 
-
-			// $output .= "----Probabilitas Data Uji----<br>";
-			// $output .= "-PCO (Tidak Layak) <br> ";
-
-			// $output .= "Status PKH: ".round($status_PKH['tidaklayak'],2);
-			// $output .= "<br>Jumlah Tanggungan: ".round($jumlah_tanggungan['tidaklayak'], 2);
-			// $output .= "<br>Kepala Rumah Tangga: ".round($kepala_rt['tidaklayak'], 2);
-			// $output .= "<br>Kondisi Rumah: ".round($kondisi_rumah['tidaklayak'], 2);
-			// $output .= "<br>Jumlah Penghasilan: ".round($jml_penghasilan['tidaklayak'], 2);
-			// $output .= "<br>Status Rumah: ".round($status_rumah['tidaklayak'], 2);
-			// $output .= "<br>Hasil Probabilitas: ";
-
-			// $output .= $kelas_tidak_layak = round($status_PKH['tidaklayak'],2)*round($jumlah_tanggungan['tidaklayak'], 2)*round($kepala_rt['tidaklayak'], 2)*round($kondisi_rumah['tidaklayak'], 2)*round($jml_penghasilan['tidaklayak'], 2)*round($status_rumah['tidaklayak'], 2)*$PC0;
-
-			// $output .= " </br><br>";
-			// $output .= "-PC1 (Layak)<br>";
-
-			// $output .= "Status PKH: ".round($status_PKH['layak'],2);
-			// $output .= "<br>Jumlah Tanggungan: ".round($jumlah_tanggungan['layak'], 2);
-			// $output .= "<br>Kepala Rumah Tangga: ".round($kepala_rt['layak'], 2);
-			// $output .= "<br>Kondisi Rumah: ".round($kondisi_rumah['layak'], 2);
-			// $output .= "<br>Jumlah Penghasilan: ".round($jml_penghasilan['layak'], 2);
-			// $output .= "<br>Status Rumah: ".round($status_rumah['layak'], 2);
-			// $output .= "<br> Hasil Probabilitas: ";
-			// $output .= $kelas_layak = round($status_PKH['layak'],2)*round($jumlah_tanggungan['layak'], 2)*round($kepala_rt['layak'], 2)*round($kondisi_rumah['layak'], 2)*round($jml_penghasilan['layak'], 2)*round($status_rumah['layak'], 2)*$PC1;
-
+			//Kesimpulan
 			$kesimpulan = "";
-			$operator = "";
-
-			echo "kelas layak" . $kelas_layak . "<br>";
-			echo "kelas tidak layak" . $kelas_tidak_layak . "<br>";
-
-			echo "<br>";
-			if ($kelas_layak >= $kelas_tidak_layak) {
-				$kesimpulan = "layak";
-				$operator = ">=";
+			if ($kelas_yes >= $kelas_no) {
+				$kesimpulan = "Akan Membeli";
 			} else {
-				$kesimpulan = "Tidak layak";
-				$operator = "<=";
+				$kesimpulan = "Tidak Akan Membeli";
 			}
+			$output .= "<br>Berdasarkan Data Uji tersebut, dapat diambil kesimpulan bahwa orang tersebut <b><u>" . $kesimpulan . "</u></b> mobil yang ditawarkan.";
 
-
-			$output .= "<br>Dapat disimpulkan Bahwa Data Uji tersebut <b><u>" . $kesimpulan . "</u></b> Untuk menerima Beras Rastra";
-
-			// masukan hasil kesimpulan dalam parameter untuk di save
-			// $this->Uji_Model->tambah_data($kesimpulan);
+			//Simpan Data Uji
 			$this->session->set_flashdata('flash_uji', 'dihitung');
 			$this->session->set_flashdata('flash_hitung', $output);
-			// redirect('DataUji');
+
+			//Tampil Data Uji
 			echo $output;
 		}
 	}

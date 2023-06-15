@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 /**
  * 
@@ -7,124 +7,118 @@ class Training_Model extends CI_Model
 {
 	public function getAllData()
 	{
-		return $this->db->get('tbl_training')->result();
+		return $this->db->get('mytable')->result();
 	}
 
-	public function tambah_data( )
+	public function tambah_data()
 	{
-		// $jumlah_penghasilan = $this->input->post('jml_penghasilan', true);
-
-		// if ($jumlah_penghasilan > 2500000) {
-		// 	$kat = "tinggi";
-		// }else if($jumlah_penghasilan >= 1500000 && $jumlah_penghasilan <= 2500000){
-		// 	$kat = "sedang";
-		// }else if($jumlah_penghasilan < 1500000){
-		// 	$kat = "rendah";
-		// }
-
 		$data = array(
-			// 'id_training' => $this->input->post('id_training', true),
-			'nama' => $this->input->post('nama', true),
-			'kepala_rt' => $this->input->post('kepala_rt', true),
-			'jml_penghasilan' => $this->input->post('jml_penghasilan', true),
-			'status_kelayakan' => $this->input->post('status_kelayakan', true)
+			'Gender' => $this->input->post('Gender', true),
+			'Age' => $this->input->post('Age', true),
+			'AnnualSalary' => $this->input->post('AnnualSalary', true),
+			'Purchased' => $this->input->post('Purchased', true)
 		);
-
-		$this->db->insert('tbl_training', $data);
+		$this->db->insert('mytable', $data);
 	}
 
-	public function ubah_data( )
+	public function ubah_data()
 	{
 		$data = array(
-			'nama' => $this->input->post('nama', true),
-			'kepala_rt' => $this->input->post('kepala_rt', true),
-			'jml_penghasilan' => $this->input->post('jml_penghasilan', true),
-			'status_kelayakan' => $this->input->post('status_kelayakan', true)
+			'Gender' => $this->input->post('Gender', true),
+			'Age' => $this->input->post('Age', true),
+			'AnnualSalary' => $this->input->post('AnnualSalary', true),
+			'Purchased' => $this->input->post('Purchased', true)
 		);
-		$this->db->where('id_training', $this->input->post('id_training', true));
-		$this->db->update('tbl_training', $data);
+		$this->db->where('User_ID', $this->input->post('User_ID', true));
+		$this->db->update('mytable', $data);
 	}
 
 	public function hapus_data($id)
 	{
-		$this->db->delete('tbl_training', ['id_training' => $id]);
+		$this->db->delete('mytable', ['User_ID' => $id]);
 	}
 
 	public function detail_data($id)
 	{
-		return $this->db->get_where('tbl_training', ['id_training' => $id]) ->row_array(); 
+		return $this->db->get_where('mytable', ['User_ID' => $id])->row_array();
 	}
 
-	public function count_layak()
+	public function count_yes()
 	{
-		$this->db->where('status_kelayakan', 'Layak');
-		$this->db->from('tbl_training');
+		$this->db->where('Purchased', 1);
+		$this->db->from('mytable');
 		return $this->db->count_all_results();
 	}
 
-	public function count_tidaklayak()
+	public function count_no()
 	{
-		$this->db->where('status_kelayakan', 'Tidak Layak');
-		$this->db->from('tbl_training');
+		$this->db->where('Purchased', 0);
+		$this->db->from('mytable');
 		return $this->db->count_all_results();
 	}
 
-	public function kepala_rt($status)
+	public function Gender($status)
 	{
-		// $status = "Laki-laki";
-		$this->db->where('kepala_rt', $status);
-		$this->db->where('status_kelayakan', "Layak");
-		$this->db->from('tbl_training');
-		$layak = $this->db->count_all_results()/$this->count_layak();	
-		$this->db->where('kepala_rt', $status);
-		$this->db->where('status_kelayakan', "Tidak Layak");
-		$this->db->from('tbl_training');
-		$tidak = $this->db->count_all_results()/$this->count_tidaklayak();
-		return array('layak' => $layak, 'tidaklayak' => $tidak);	
+		$this->db->where('Gender', $status);
+		$this->db->where('Purchased', 1);
+		$this->db->from('mytable');
+		$yes = $this->db->count_all_results() / $this->count_yes();
+		$this->db->where('Gender', $status);
+		$this->db->where('Purchased', 0);
+		$this->db->from('mytable');
+		$no = $this->db->count_all_results() / $this->count_no();
+		return array(1 => $yes, 0 => $no);
 	}
 
-	public function jml_penghasilan($status)
-	{	
-		$kat ="";
-		if ($status > 2500000) {
+	public function Age($status)
+	{
+		$this->db->where('Age', $status);
+		$this->db->where('Purchased', 1);
+		$this->db->from('mytable');
+		$yes = $this->db->count_all_results() / $this->count_yes();
+		$this->db->where('Age', $status);
+		$this->db->where('Purchased', 0);
+		$this->db->from('mytable');
+		$no = $this->db->count_all_results() / $this->count_no();
+		return array(1 => $yes, 0 => $no);
+	}
+
+	public function AnnualSalary($status)
+	{
+		$kat = "";
+		if ($status > 125625) {
 			$kat = "tinggi";
-		}else if($status >= 1500000 && $status <= 2500000){
+		} else if ($status >= 83750 && $status <= 125625) {
 			$kat = "sedang";
-		}else if($status < 1500000){
+		} else if ($status < 83750) {
 			$kat = "rendah";
 		}
-		$q_layak = $this->db->query("
+		$q_yes = $this->db->query("
 			SELECT count(*) as jml FROM (
-			SELECT jml_penghasilan,  status_kelayakan,
+			SELECT AnnualSalary,  Purchased,
 			CASE
-			WHEN jml_penghasilan > 2500000 THEN 'tinggi'
-			WHEN jml_penghasilan >= 1500000 AND jml_penghasilan <= 2500000 THEN 'sedang'
-			WHEN jml_penghasilan < 1500000 THEN 'rendah'
+			WHEN AnnualSalary > 125625 THEN 'tinggi'
+			WHEN AnnualSalary >= 83750 AND AnnualSalary <= 125625 THEN 'sedang'
+			WHEN AnnualSalary < 83750 THEN 'rendah'
 			ELSE ''
-			END AS c_jml_penghasilan
-			FROM tbl_training 
-			) as conversi_jml_penghasilan  WHERE c_jml_penghasilan ='$kat' AND status_kelayakan = 'layak'
+			END AS c_AnnualSalary
+			FROM mytable 
+			) as conversi_AnnualSalary  WHERE c_AnnualSalary ='$kat' AND Purchased = 1
 			")->row();
-		$layak = $q_layak->jml/$this->count_layak();
-		$q_tidak = $this->db->query("
+		$yes = $q_yes->jml / $this->count_yes();
+		$q_no = $this->db->query("
 			SELECT count(*) as jml FROM (
-			SELECT jml_penghasilan,  status_kelayakan,
+			SELECT AnnualSalary,  Purchased,
 			CASE
-			WHEN jml_penghasilan > 2500000 THEN 'tinggi'
-			WHEN jml_penghasilan >= 1500000 AND jml_penghasilan <= 2500000 THEN 'sedang'
-			WHEN jml_penghasilan < 1500000 THEN 'rendah'
+			WHEN AnnualSalary > 125625 THEN 'tinggi'
+			WHEN AnnualSalary >= 83750 AND AnnualSalary <= 125625 THEN 'sedang'
+			WHEN AnnualSalary < 83750 THEN 'rendah'
 			ELSE ''
-			END AS c_jml_penghasilan
-			FROM tbl_training 
-			) as conversi_jml_penghasilan  WHERE c_jml_penghasilan ='$kat' AND status_kelayakan = 'tidak layak'
+			END AS c_AnnualSalary
+			FROM mytable 
+			) as conversi_AnnualSalary  WHERE c_AnnualSalary ='$kat' AND Purchased = 0
 			")->row();
-		$tidak = $q_tidak->jml/$this->count_tidaklayak();
-
-		return array('layak' => $layak, 'tidaklayak' => $tidak);	
+		$no = $q_no->jml / $this->count_no();
+		return array(1 => $yes, 0 => $no);
 	}
-
-
-
-
-
 }

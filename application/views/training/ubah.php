@@ -34,33 +34,31 @@ Content Wrapper. Contains page content -->
                 <form action="" method="post" accept-charset="utf-8">
                   <div class="card-body">
                     <div class="form-group">
-                      <label for="exampleInputEmail1">id Training</label>
-                      <input type="text" class="form-control disabled" name="id_training" value="<?= $ubah['id_training'] ?>" readonly>
+                      <label for="exampleInputEmail1">User_ID</label>
+                      <input type="text" class="form-control disabled" name="User_ID" value="<?= $ubah["User_ID"] ?>" readonly>
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Nama</label>
-                      <input type="text" class="form-control" name="nama" value="<?= $ubah['nama'] ?>">
-                    </div>
-                    <div class="form-group">
-                      <label>Kepala Rumah Tangga</label>
-                      <select class="form-control" name="kepala_rt">
-                        <option value="laki-laki">Laki-laki</option>
-                        <option value="perempuan">Perempuan</option>
+                      <label>Gender</label>
+                      <select class="form-control" name="Gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
                       </select>
                     </div>
                     <div class="form-group">
-                      <label for="exampleInputPassword1">Jumlah Penghasilan</label>
-                      <input type="text" class="form-control" name="jml_penghasilan" value="<?= $ubah['jml_penghasilan'] ?>">
+                      <label for="exampleInputPassword1">Age</label>
+                      <input type="text" class="form-control" name="Age" value="<?= $ubah['Age'] ?>">
                     </div>
                     <div class="form-group">
-                      <label>Status Kelayakan</label>
-                      <select class="form-control" name="status_kelayakan">
-                        <option value="layak">Layak</option>
-                        <option value="tidak layak">Tidak Layak</option>
+                      <label for="exampleInputPassword1">AnnualSalary</label>
+                      <input type="text" class="form-control" name="AnnualSalary" value="<?= $ubah['AnnualSalary'] ?>">
+                    </div>
+                    <div class="form-group">
+                      <label>Purchased</label>
+                      <select class="form-control" name="Purchased">
+                        <option value=1>Yes</option>
+                        <option value=0>No</option>
                       </select>
                     </div>
-
-
                     <input type="submit" name="save" class="btn btn-primary" value="Save">
                   </div>
                   <!-- /.card-body -->
