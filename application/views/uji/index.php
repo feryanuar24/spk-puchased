@@ -1,23 +1,19 @@
-<!-- Content Wrapper. Contains page content -->
+<!-- Start: Content Wrapper -->
 <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
+
+  <!-- Start: Content Header (Page header) -->
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1>Data Uji</h1>
         </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
-            <li class="breadcrumb-item active">Data Uji</li>
-          </ol>
-        </div>
       </div>
-    </div><!-- /.container-fluid -->
+    </div>
   </section>
+  <!-- End: Content Header (Page header) -->
 
-  <!-- Main content -->
+  <!-- Start: Main content -->
   <section class="content">
     <!-- NOTIFIKASI -->
     <?php
@@ -33,7 +29,6 @@
         </h6>
       </div>
     <?php } ?>
-    <!-- tambah data -->
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -45,7 +40,6 @@
               </button>
             </div>
           </div>
-          <!-- /.card-header -->
           <div class="card-body">
             <div class="row">
               <div class="col-md-8">
@@ -69,21 +63,13 @@
                     </div>
                     <input type="submit" name="save" class="btn btn-primary" value="Save">
                   </div>
-                  <!-- /.card-body -->
                 </form>
               </div>
-              <!-- /.col -->
             </div>
-            <!-- /.row -->
           </div>
-          <!-- ./card-body -->
         </div>
-        <!-- /.card -->
       </div>
-      <!-- /.col -->
     </div>
-    <!-- /.row -->
-    <!-- list data -->
     <div class="row">
       <div class="col-12">
         <div class="card">
@@ -92,12 +78,12 @@
             <table id="example1" class="table table-bordered table-striped">
               <thead>
                 <tr>
-                  <th>No</th>
                   <th>User_ID</th>
                   <th>Gender</th>
                   <th>Age</th>
                   <th>AnnualSalary</th>
                   <th>Purchased</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -105,7 +91,6 @@
                 $no = 1;
                 foreach ($training as $row) { ?>
                   <tr>
-                    <td><?= $no ?></td>
                     <td><?= $row->User_ID ?></td>
                     <td><?= $row->Gender ?></td>
                     <td><?= $row->Age ?></td>
@@ -125,20 +110,16 @@
               </tbody>
             </table>
           </div>
-          <!-- /.card-body -->
         </div>
-        <!-- /.card -->
       </div>
-      <!-- /.col -->
     </div>
-    <!-- /.row -->
   </section>
-  <!-- /.content -->
+  <!-- End: Main content -->
+
 </div>
+<!-- End: Content Wrapper -->
 
-
-
-<!-- Modal -->
+<!-- Start: Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -158,3 +139,4 @@
     </div>
   </div>
 </div>
+<!-- End: Modal -->

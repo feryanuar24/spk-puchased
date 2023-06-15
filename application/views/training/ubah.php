@@ -1,32 +1,26 @@
-Content Wrapper. Contains page content -->
+<!-- Start: Content Wrapper -->
 <div class="content-wrapper">
-  <!-- Content Header (Page header) -->
+
+  <!-- Start: Content Header (Page header) -->
   <section class="content-header">
     <div class="container-fluid">
       <div class="row mb-2">
         <div class="col-sm-6">
           <h1> Ubah Data Training</h1>
         </div>
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item">Dashboard</li>
-            <li class="breadcrumb-item">Data Training</li>
-            <li class="breadcrumb-item active">Ubah Data Training</li>
-          </ol>
-        </div>
       </div>
-    </div><!-- /.container-fluid -->
   </section>
-  <!-- Main content -->
+  <!-- End: Content Header (Page header) -->
+
+
+  <!-- Start: Main content -->
   <section class="content">
-    <!-- tambah data -->
     <div class="row">
       <div class="col-md-12">
         <div class="card">
           <div class="card-header">
             <h5 class="card-title">Ubah Data</h5>
           </div>
-          <!-- /.card-header -->
           <div class="card-body">
             <div class="row">
               <div class="col-md-8">
@@ -61,21 +55,15 @@ Content Wrapper. Contains page content -->
                     </div>
                     <input type="submit" name="save" class="btn btn-primary" value="Save">
                   </div>
-                  <!-- /.card-body -->
                 </form>
               </div>
-              <!-- /.col -->
             </div>
-            <!-- /.row -->
           </div>
-          <!-- ./card-body -->
         </div>
-        <!-- /.card -->
       </div>
-      <!-- /.col -->
     </div>
-    <!-- /.row -->
   </section>
-  <!-- /.content -->
+  <!-- Start: Main content -->
+
 </div>
-<!-- /.content-wrapper
+<!-- End: Content Wrapper -->

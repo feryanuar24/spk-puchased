@@ -1,13 +1,8 @@
-
-<!-- Main Footer -->
+<!-- Start: Main Footer -->
 <footer class="main-footer">
-	<strong>Hak Cipta &copy;2020</strong>
-	<div class="float-right d-none d-sm-inline-block">
-		<b>Dev</b> <a href="http://www.mycoding.net" target="_blank">My Coding</a>
-	</div>
+	<strong>Kelompok 3</strong>
 </footer>
-</div>
-<!-- ./wrapper -->
+<!-- End: Main Footer -->
 
 <!-- REQUIRED SCRIPTS -->
 <!-- jQuery -->
@@ -27,30 +22,24 @@
 <script src="<?= base_url() ?>assets/dist/js/adminlte.js"></script>
 
 <!-- OPTIONAL SCRIPTS -->
-<script src="<?= base_url() ?>assets/dist/js/demo.js"></script>
-
+<script src="<?= base_url() ?>assets/dist/js/demo.js"></script>=
 <!-- ChartJS -->
 <script src="<?= base_url() ?>assets/plugins/chart.js/Chart.min.js"></script>
 
 <!-- PAGE SCRIPTS -->
 <script src="<?= base_url() ?>assets/dist/js/pages/dashboard2.js"></script>
-<!-- page script Table -->
-
+<!-- Page Script Table -->
 <script>
-	$(function () {
+	$(function() {
 		$('#example1').DataTable();
 	});
-	$(document).ready(function(){
-	// 	$('#btn').click(function(){
-		<?php if ($this->session->flashdata('flash_hitung')): ?>
+	$(document).ready(function() {
+		<?php if ($this->session->flashdata('flash_hitung')) : ?>
 			$('#exampleModal').modal('show');
 		<?php endif ?>
-	// 	});
-});
+	});
 </script>
 
 </body>
+
 </html>
-
-
-

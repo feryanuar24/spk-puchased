@@ -123,7 +123,7 @@ class DataUji extends CI_Controller
 			<th>Gender</th>
 			<th>Age</th>
 			<th>AnnualSalary</th>
-			<th>Hasil Proba bilitas</th>
+			<th>Hasil Probabilitas</th>
 			</tr>
 			<tr>
 			<td>PC1 (Yes)</th>
